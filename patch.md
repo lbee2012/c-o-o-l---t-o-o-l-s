@@ -1,3 +1,6 @@
+# Automatic-Setup
+An application for users who frequently reinstall ưyndoz.
+
 # Next patch
 
 Finish a previous file:
