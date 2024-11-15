@@ -13,12 +13,12 @@ An application for users who frequently reinstall ưyndoz.
 
 - User need to press 'Enter' to exit program. Add "Press [Enter] to exit the program."
 
-***14:02 15/11***
+***15.11.24 | 14:02***
 ***
 
 # Update 1.2 (Bug fix)
 
-- **Fix:**
+- **Fix**
 
     - Press key '0' still process the next file
         - Description: 
@@ -44,9 +44,28 @@ An application for users who frequently reinstall ưyndoz.
             > C:\Users\"Your_Username"\Documents
         - Automatically update folder's path whenever user moves it.
 
-***23:51 15/11***
+***15.11.24 | 23:51***
 ***
 
+# Update 1.3 (Bug fix)
+
+- **Fix**
+
+    - After press key '0'
+        - "Exiting program..."
+        - Counting for 3 second then auto close program and do not appear any sentence after "Exiting program..."
+
+    - Last file has done
+        - Only appear
+            ```
+            print("All setup files have been processed.")
+            input("Press [Enter] to exit the program.")
+            ```
+            when the last file has been processed
+    - Fix UI, more clean than previous version
+
+***16.11.24 | 00:22***
+***
 ## Future
 
 - Sample UX, UI
@@ -55,7 +74,6 @@ An application for users who frequently reinstall ưyndoz.
     - Interaction with the setup files.
 
 ***
-
 # Note: Private
 
 Syntax for transfer code to an .exe application.

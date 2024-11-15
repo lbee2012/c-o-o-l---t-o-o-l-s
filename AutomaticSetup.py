@@ -57,27 +57,33 @@ if __name__ == "__main__":
             for setup_file in setup_files:
                 setup_path = folder_path[0] / setup_file
                 try:
-                    while True:  # Wait for user command
-                        print(f"Ready to run {setup_file}.\n"
-                              "Continue [n]\n"
-                              "Exit [0].")
-                        user_input = input().strip().lower()
+                    while True:
+                        print(f"Ready to run {setup_file}.")
+                        print("\nOptions:")
+                        print("   [n] Next")
+                        print("   [0] Exit")
+                        user_input = input("\nEnter your choice: ").strip().lower()
 
                         if user_input in ['n', 'next']:
-                            print(f"Running {setup_file}...")
+                            print(f"\nRunning {setup_file}...")
                             subprocess.run(setup_path, shell=True)
-                            print(f"{setup_file} has done.")
+                            print(f"\n{setup_file} has done.")
                             break
                         elif user_input == '0':
-                            print("Exiting program...")
-                            exit(0)
+                            print("Exiting program...", end="\r")
+                            import time
+                            for i in range(3, 0, -1):
+                                print(f"Closing in {i}", end="\r")
+                                time.sleep(1)
+                            print("Closing now!   ", end="\r")  # Clear previous number
+                            sys.exit(0)
                         else:
                             print("Invalid input. Please try again.")
                 except Exception as e:
                     print(f"Failed to run {setup_file}: {e}")
 
-            print("All setup files have been processed.")
-            input("Press [Enter] to exit the program.")
+            print("\nAll setup files have been processed.")
+            input("\nPress [Enter] to exit the program.")
             break
     finally:
         observer.stop()
