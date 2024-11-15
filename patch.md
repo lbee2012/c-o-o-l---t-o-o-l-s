@@ -80,4 +80,4 @@ Syntax for transfer code to an .exe application.
 
 > pyinstaller --onefile AutomaticSetup.py
 
-Remember, always push code after fixing.
+Remember, always push code after adjusted.
