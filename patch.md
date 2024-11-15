@@ -3,6 +3,8 @@ An application for users who frequently reinstall ưyndoz.
 
 # Update 1.1
 
+**Features**
+
 - When finish a previous file:
     - Ask user to press keyword 'n', 'next' or various types of 'Next' (lowerCase / upperCase) to proceed to the next file.
     - Or press key '0' to exit the program immediately.
