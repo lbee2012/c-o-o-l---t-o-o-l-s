@@ -30,5 +30,5 @@ for setup_file in setup_files:
     except Exception as e:
         print(f"Failed to run {setup_file}: {e}")
 
-print("All setup files have been finished.")
+print("All setup files have been processed.")
 input("Press [Enter] to exit the program.")
