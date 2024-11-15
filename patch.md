@@ -14,7 +14,6 @@ An application for users who frequently reinstall ưyndoz.
 - User need to press 'Enter' to exit program. Add "Press [Enter] to exit the program."
 
 ***14:02 15/11***
-
 ***
 
 # Update 1.2 (Bug fix)
@@ -41,9 +40,11 @@ An application for users who frequently reinstall ưyndoz.
 - **Features**
 
     - Bring 'Not Yet' to version 1.2
-        - Request user to create a folder named: "Automatic Setup Folder" in optional location during application setup.
+        - Create folder name "Automatic Setup Folder" in 
+            > C:\Users\"Your_Username"\Documents
         - Automatically update folder's path whenever user moves it.
-        
+
+***23:51 15/11***
 ***
 
 ## Future
