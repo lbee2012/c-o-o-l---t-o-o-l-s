@@ -1,30 +1,44 @@
-## Tiếp theo
+# Next patch
 
-Chạy xong setup của một file, nhập "n" or "N" or "next" or "Next" or "NEXT" or các biến thể của từ 'next' (in thường in hoa từ chữ là các biến thể) để chạy file tiếp theo.
+Finish a previous file:
+- Ask user to press keyword 'n', 'next' or variable types of 'Next' (lowerCase / upperCase) to keep runing to the next file.
+- Or press key '0' to exit the program immediately. 
 
-Không cho phép chạy khi không có lệnh 'N'.
+Do not allow to run without user's command.
 
-Thêm câu đã xong tất cả sau khi cài xong hết, bấm enter để thoát app.
+When all the setup files have done, add "All setup files have been finished."
 
-Up code lên github
+User need to press 'Enter' to exit program, add "Press [Enter] to exit the program."
 
-***
-
-### Chưa xác định (Khó)
-
-Yêu cầu người dùng tạo một folder có tên "Automatic Setup Folder" ở vị trí tự chọn.
-
-Cập nhật đường dẫn tới folder khi người dùng di chuyển folder.
 
 ***
 
-### Tương lai
+## Not yet
+
+Request user to create a folder named: "Automatic Setup Folder" in optional location on application setup.
+
+Automatic update folder's path whenever user moving it.
+
+***
+
+## Future
 
 Tạo giao diện cơ bản
 - Nút bắt đầu
 - Nút chạy tiếp / Chạy tự động
+- Interaction
 
+Sample UX, UI
+- Start (button)
+- Next file / Auto run (button)
+- Interaction with the setup files.
+
+# Note
+
+Push code to Github
 
 ***
+Syntax for transfer code to an .exe application.
+```
 pyinstaller --onefile AutomaticSetup.py
-***
+```
