@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from pathlib import Path
@@ -58,32 +59,36 @@ if __name__ == "__main__":
                 setup_path = folder_path[0] / setup_file
                 try:
                     while True:
-                        print(f"Ready to run {setup_file}.")
+                        print(f"\nReady to run {setup_file}.")
                         print("\nOptions:")
-                        print("   [n] Next")
-                        print("   [0] Exit")
+                        print("[c] Continue")
+                        print("[s] Skip")
+                        print("[0] Exit")
                         user_input = input("\nEnter your choice: ").strip().lower()
 
-                        if user_input in ['n', 'next']:
+                        if user_input in ['c', 'continue']:
                             print(f"\nRunning {setup_file}...")
                             subprocess.run(setup_path, shell=True)
                             print(f"\n{setup_file} has done.")
                             break
+                        elif user_input in ['s', 'skip']:
+                            print(f"\nSkipping {setup_file}...")
+                            break
                         elif user_input == '0':
-                            print("Exiting program...", end="\r")
+                            print("\nExiting program...")
                             import time
                             for i in range(3, 0, -1):
-                                print(f"Closing in {i}", end="\r")
+                                print(f"Closing in {i}...      ", end="\r")
                                 time.sleep(1)
-                            print("Closing now!   ", end="\r")  # Clear previous number
+                            print("Closing now!            ", end="\r")
                             sys.exit(0)
                         else:
                             print("Invalid input. Please try again.")
                 except Exception as e:
-                    print(f"Failed to run {setup_file}: {e}")
+                    print(f"\nFailed to run {setup_file}: {e}")
 
             print("\nAll setup files have been processed.")
-            input("\nPress [Enter] to exit the program.")
+            input("Press [Enter] to exit the program.")
             break
     finally:
         observer.stop()
