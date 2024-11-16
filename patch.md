@@ -90,11 +90,23 @@ An application for users who frequently reinstall ưyndoz.
     - Start (button)
     - Next file / Auto run (button)
     - Interaction with the setup files.
+- Progress bar, animate on installations
+- Multi-Threaded installations
+- Multi-Language support
+- Check for update
+- Notify when done all
+- Retry failed installations
+- Log file for installation details
 
 ***
 # Note: Private
 
 Syntax for transfer code to an .exe application.
-> pyinstaller --onefile AutomaticSetup.py
+
+```
+pyinstaller --onefile AutomaticSetup.py
+--------------------------------------------------
+pyinstaller --onefile --windowed --icon=AutomaticSetup.ico AutomaticSetup.py
+```
 
 Remember, always push code after adjusted.
