@@ -43,7 +43,7 @@ An application for users who frequently reinstall ưyndoz.
 
 - Bring 'Not Yet' to version 1.2
     - Create folder name "Automatic Setup Folder" in 
-        > C:\Users\"Your_Username"\Documents
+        `C:\Users\"Your_Username"\Documents`
     - Automatically update folder's path whenever user moves it.
 
 ***15.11.24 | 23:51***
@@ -106,20 +106,35 @@ An application for users who frequently reinstall ưyndoz.
 
 ***14:44 16/11***
 ***
+
+# Update 1.6
+
+**What's new**
+
+- New main folder in `Document`: **Automatic Setup**
+    - Two branches folder
+        - **Ngot:** for process setup files
+        - **log**: for generation log files
+
+**Features**
+
+- Log details from now will recorded at
+    `C:\Users\longg\Documents\Automatic Setup\log`
+
+***17:57 16/11***
+***
+
 ## Future
 
-- Notify by sound and ask for reboot at the end
-- Log file generation
 - System restore point creation
-- Check for update
-
 
 - Retry failed installations
 - Progress status on taskbar, animate on installations 
+- Interaction with the setup files
 - Multi-Threaded installations
 - Custom Setup File Order
 
-- Interaction with the setup files.
+- Check for update of those files
 - Sample UX, UI
 - Multi-Language support
 
