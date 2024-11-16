@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['AutomaticSetup.ico'],
+    icon=['C:\\Users\\longg\\Documents\\GitHub\\Automatic-Setup\\AutomaticSetup.ico'],
 )

@@ -82,7 +82,8 @@ An application for users who frequently reinstall ưyndoz.
 - Application icon
 
 - C - Continue button instead of N - Next
-    
+
+***10:53 16/11***
 ***
 ## Future
 
@@ -106,7 +107,6 @@ Syntax for transfer code to an .exe application.
 ```
 pyinstaller --onefile AutomaticSetup.py
 --------------------------------------------------
-pyinstaller --onefile --windowed --icon=AutomaticSetup.ico AutomaticSetup.py
 ```
 
 Remember, always push code after adjusted.
