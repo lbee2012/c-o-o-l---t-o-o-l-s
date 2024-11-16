@@ -104,7 +104,7 @@ An application for users who frequently reinstall ưyndoz.
 		- Enter: restart command counting down for 5 seconds
 		- Esc: exit the program, counting down for 3 seconds
 
-
+***14:44 16/11***
 ***
 ## Future
 
