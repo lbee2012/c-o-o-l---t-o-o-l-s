@@ -85,19 +85,43 @@ An application for users who frequently reinstall ưyndoz.
 
 ***10:53 16/11***
 ***
+
+# Update 1.5 (Patch)
+
+**What's new**
+
+- Temperature remove application icon
+
+- Remove feature update folder's path automatically (Many bug)
+
+**Features**
+
+- Notice user when all of the installations have proceed
+	- Windows sound (Boom)
+
+- Reboot management
+	- Ask for reboot
+		- Enter: restart command counting down for 5 seconds
+		- Esc: exit the program, counting down for 3 seconds
+
+
+***
 ## Future
 
-- Sample UX, UI
-    - Start (button)
-    - Next file / Auto run (button)
-    - Interaction with the setup files.
-- Progress bar, animate on installations
-- Multi-Threaded installations
-- Multi-Language support
+- Notify by sound and ask for reboot at the end
+- Log file generation
+- System restore point creation
 - Check for update
-- Notify when done all
+
+
 - Retry failed installations
-- Log file for installation details
+- Progress status on taskbar, animate on installations 
+- Multi-Threaded installations
+- Custom Setup File Order
+
+- Interaction with the setup files.
+- Sample UX, UI
+- Multi-Language support
 
 ***
 # Note: Private
@@ -105,8 +129,10 @@ An application for users who frequently reinstall ưyndoz.
 Syntax for transfer code to an .exe application.
 
 ```
-pyinstaller --onefile AutomaticSetup.py
---------------------------------------------------
++---------------------------------------+
+|pyinstaller --onefile AutomaticSetup.py|
++---------------------------------------+
 ```
+`pyinstaller --onefile AutomaticSetup.py`
 
 Remember, always push code after adjusted.
