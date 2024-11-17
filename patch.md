@@ -146,15 +146,18 @@ An application for users who frequently reinstall ưyndoz.
 
 ## Future
 
+- Sample UX, UI
+
 - Multi-Threaded installations
-- Retry failed installations
-- Progress status on taskbar, animate on installations 
 - Interaction with the setup files
+- Retry failed installations
+- Progress status on taskbar, animate on installations
 - Custom Setup File Order
 
 - Check for update of those files
-- Sample UX, UI
 - Multi-Language support
+
+- Next file will replace the previous with new information 
 
 ***
 # Note: Private
