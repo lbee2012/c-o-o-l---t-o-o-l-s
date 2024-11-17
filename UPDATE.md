@@ -144,36 +144,77 @@ An application for users who frequently reinstall ưyndoz.
 ***10:23 17/11***
 ***
 
-## Future
+# Update 1.8 (Big update)
 
-- Sample UX, UI
+***What's new***
 
-- Multi-Threaded installations
+- Next file will replace the previous with new information as new window
+- Remove create system restore point
+
+***Features***
+
+- Replace previous screen with new clear screen
+
+    - For example, previous version:
+        -   ```
+            File A
+                Option
+                a
+                b
+
+                Process
+
+            File B
+                Option
+                a
+                b
+
+                Process
+
+            File n (Loop)
+            ```
+        
+    - Replace all of it with only one file on a windows
+        -   ```
+            Ready to run A.exe
+
+            Options:
+            [c] Continue
+            [s] Skip
+            [0] Exit
+
+            Enter your choice: c
+
+            Processing: A.exe
+            Status: In progress / Skipped / Error / ....
+
+            Press [ENTER] to continue to the next file.
+
+            (Loop)
+            ```
+    - At the end, make the overall view for user to check about their setup-files
+        - File A [Done]
+        - File B [Error]
+        - File C [Skip]
+
+***22:45 17/11***
+***
+
+
+# Future
+
 - Interaction with the setup files
 - Retry failed installations
 - Progress status on taskbar, animate on installations
 - Custom Setup File Order
 
+
+- Multi-Threaded installations ///
+
 - Check for update of those files
 - Multi-Language support
     - EN-US
     - VI-VN
-
-- Next file will replace the previous with new information as new window
-    - For example, previous version:
-        - Name A
-            - Option
-            - a
-            - b
-            - Process
-        - Name B
-            - Option
-            - a
-            - b
-            - Process
-        - Name n
-    
-    - Replace all of it with only one context
 
 ***
 # Note: Private
