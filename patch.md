@@ -156,8 +156,24 @@ An application for users who frequently reinstall ưyndoz.
 
 - Check for update of those files
 - Multi-Language support
+    - EN-US
+    - VI-VN
 
-- Next file will replace the previous with new information 
+- Next file will replace the previous with new information as new window
+    - For example, previous version:
+        - Name A
+            - Option
+            - a
+            - b
+            - Process
+        - Name B
+            - Option
+            - a
+            - b
+            - Process
+        - Name n
+    
+    - Replace all of it with only one context
 
 ***
 # Note: Private
