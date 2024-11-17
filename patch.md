@@ -124,14 +124,32 @@ An application for users who frequently reinstall ưyndoz.
 ***17:57 16/11***
 ***
 
+# Update 1.7
+
+**What's new**
+
+- Create system restore point to protect your PC before adjust
+
+- Fix UI, cleaner and clearly than the previous version.
+
+- Log details more clearly
+
+**Features**
+
+- Create a system restore point
+    - Ask user for create a restore point
+        - y - yes = create
+        - n - no = non-create
+
+***10:23 17/11***
+***
+
 ## Future
 
-- System restore point creation
-
+- Multi-Threaded installations
 - Retry failed installations
 - Progress status on taskbar, animate on installations 
 - Interaction with the setup files
-- Multi-Threaded installations
 - Custom Setup File Order
 
 - Check for update of those files
