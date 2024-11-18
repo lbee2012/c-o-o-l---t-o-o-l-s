@@ -118,7 +118,7 @@ def process_setup_files():
             logging.info("Skipped %s", setup_file)
             
             # Countdown for skipping in the same line
-            countdown("Skipping in", 3)
+            countdown("Skipping in", 1)
 
         elif user_input == '0':
             logging.info("User chose to exit.")

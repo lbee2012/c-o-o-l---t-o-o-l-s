@@ -200,6 +200,11 @@ An application for users who frequently reinstall ưyndoz.
 ***22:45 17/11***
 ***
 
+# Update 1.8
+
+**What's new**
+
+- Adjust for better UI, run smoother, OCD'er would love this app...
 
 # Future Features
 
