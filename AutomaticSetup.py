@@ -75,12 +75,12 @@ def wait_for_keypress():
         elif key == b'\x1b':  # Escape
             return "Exit"
 
-def countdown(seconds=3):
-    """Display a countdown."""
+def countdown(message, seconds=3):
+    """Display a countdown message on the same line."""
     for i in range(seconds, 0, -1):
-        print(f"\nContinuing in {i} seconds...    ", end="\r")
+        print(f"\r{message} {i} seconds...{' ' * 10}", end="", flush=True)
         time.sleep(1)
-    os.system('cls')  # Clear screen after countdown
+    print("\r" + " " * 50, end="\r")  # Clear the line after countdown
 
 def process_setup_files():
     """Process each setup file in the storage folder."""
@@ -103,37 +103,28 @@ def process_setup_files():
                 # Run the setup file
                 subprocess.run(str(installation_folder_path / setup_file), shell=True)
                 statuses[setup_file] = "Successed"
-                print(f"\nStatus: Successed")
+                print(f"\nStatus: Successed\n")
             except Exception as e:
                 statuses[setup_file] = "Error"
-                print(f"\nStatus: Error")
+                print(f"\nStatus: Error\n")
                 logging.error("Failed to run %s: %s", setup_file, e)
             
-            # Countdown on the same screen before moving to the next file
-            for i in range(3, 0, -1):
-                print(f"\nMoving to the next file in {i} seconds...{' ' * 10}", end="\r")
-                time.sleep(1)
-            print(" " * 50, end="\r")  # Clear the countdown line
+            # Countdown before moving to the next file in the same line
+            countdown("Moving to the next file in", 3)
 
         elif user_input in ['s', 'skip']:
             statuses[setup_file] = "Skipped"
-            print(f"\nStatus: Skipped")
+            print(f"\nStatus: Skipped\n")
             logging.info("Skipped %s", setup_file)
             
-            # Countdown for skipping on the same screen
-            for i in range(3, 0, -1):
-                print(f"\nSkipping in {i} seconds...{' ' * 10}", end="\r")
-                time.sleep(1)
-            print(" " * 50, end="\r")  # Clear the countdown line
+            # Countdown for skipping in the same line
+            countdown("Skipping in", 3)
 
         elif user_input == '0':
             logging.info("User chose to exit.")
             
-            # Countdown for exiting on the same screen
-            for i in range(3, 0, -1):
-                print(f"\nExiting in {i} seconds...{' ' * 10}", end="\r")
-                time.sleep(1)
-            print(" " * 50, end="\r")  # Clear the countdown line
+            # Countdown for exiting in the same line
+            countdown("Exiting in", 3)
             sys.exit(0)
 
         else:
@@ -152,15 +143,9 @@ if __name__ == "__main__":
     choice = wait_for_keypress()
     if choice == "Reboot":
         logging.info("User chose to reboot.")
-        for i in range(5, 0, -1):
-            print(f"Rebooting in {i} seconds...    ", end="\r")
-            time.sleep(1)
-        print("CYA!")
+        countdown("Rebooting in", 5)
         subprocess.run("shutdown /r /t 0", shell=True)
     elif choice == "Exit":
         logging.info("User chose to exit without rebooting.")
-        for i in range(3, 0, -1):
-            print(f"Exiting in {i} seconds...    ", end="\r")
-            time.sleep(1)
-        print("CYA!")
+        countdown("Exiting in", 3)
         sys.exit(0)
