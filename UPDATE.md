@@ -201,7 +201,7 @@ An application for users who frequently reinstall ưyndoz.
 ***
 
 
-# Future
+# Future Features
 
 - Interaction with the setup files
 - Retry failed installations

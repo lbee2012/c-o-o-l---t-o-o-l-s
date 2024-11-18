@@ -55,9 +55,12 @@ def check_storage():
 
 def print_summary():
     """Print the summary of setup statuses."""
+    os.system('cls')  # Clear screen
     print("\nSummary of setup files:")
+    print("=" * 60)
     for file, status in statuses.items():
         print(f"  {file.ljust(50)}: {status}")
+    print("=" * 60)
     print("\nSetup process completed.")
 
 def wait_for_keypress():
@@ -71,6 +74,13 @@ def wait_for_keypress():
             return "Reboot"
         elif key == b'\x1b':  # Escape
             return "Exit"
+
+def countdown(seconds=3):
+    """Display a countdown."""
+    for i in range(seconds, 0, -1):
+        print(f"\nContinuing in {i} seconds...    ", end="\r")
+        time.sleep(1)
+    os.system('cls')  # Clear screen after countdown
 
 def process_setup_files():
     """Process each setup file in the storage folder."""
@@ -90,6 +100,7 @@ def process_setup_files():
         if user_input in ['c', 'continue']:
             print(f"\nProcessing: {setup_file}")
             try:
+                # Run the setup file
                 subprocess.run(str(installation_folder_path / setup_file), shell=True)
                 statuses[setup_file] = "Successed"
                 print(f"\nStatus: Successed")
@@ -97,20 +108,37 @@ def process_setup_files():
                 statuses[setup_file] = "Error"
                 print(f"\nStatus: Error")
                 logging.error("Failed to run %s: %s", setup_file, e)
+            
+            # Countdown on the same screen before moving to the next file
+            for i in range(3, 0, -1):
+                print(f"\nMoving to the next file in {i} seconds...{' ' * 10}", end="\r")
+                time.sleep(1)
+            print(" " * 50, end="\r")  # Clear the countdown line
+
         elif user_input in ['s', 'skip']:
             statuses[setup_file] = "Skipped"
             print(f"\nStatus: Skipped")
             logging.info("Skipped %s", setup_file)
+            
+            # Countdown for skipping on the same screen
+            for i in range(3, 0, -1):
+                print(f"\nSkipping in {i} seconds...{' ' * 10}", end="\r")
+                time.sleep(1)
+            print(" " * 50, end="\r")  # Clear the countdown line
+
         elif user_input == '0':
             logging.info("User chose to exit.")
+            
+            # Countdown for exiting on the same screen
+            for i in range(3, 0, -1):
+                print(f"\nExiting in {i} seconds...{' ' * 10}", end="\r")
+                time.sleep(1)
+            print(" " * 50, end="\r")  # Clear the countdown line
             sys.exit(0)
+
         else:
             print("\nInvalid choice. Please try again.")
             statuses[setup_file] = "Error"
-            continue
-
-        print("\nPress [ENTER] to continue to the next file.")
-        msvcrt.getch()
 
 # Main execution
 if __name__ == "__main__":
