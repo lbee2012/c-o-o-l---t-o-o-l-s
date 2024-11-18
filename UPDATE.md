@@ -200,7 +200,7 @@ An application for users who frequently reinstall ưyndoz.
 ***22:45 17/11***
 ***
 
-# Update 1.8
+# Update 1.9
 
 **What's new**
 
