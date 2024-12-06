@@ -17,10 +17,18 @@ log_folder_name = "log"
 installation_folder_path = main_folder_path / installation_folder_name
 log_folder_path = main_folder_path / log_folder_name
 
-# Ensure folders exist
-main_folder_path.mkdir(parents=True, exist_ok=True)
-installation_folder_path.mkdir(parents=True, exist_ok=True)
-log_folder_path.mkdir(parents=True, exist_ok=True)
+# Ensure folders exist and notify user when created
+if not main_folder_path.exists():
+    main_folder_path.mkdir(parents=True, exist_ok=True)
+    print(f"Main folder created: {main_folder_path}")
+
+if not installation_folder_path.exists():
+    installation_folder_path.mkdir(parents=True, exist_ok=True)
+    print(f"Installation folder created: {installation_folder_path}")
+
+if not log_folder_path.exists():
+    log_folder_path.mkdir(parents=True, exist_ok=True)
+    print(f"Log folder created: {log_folder_path}")
 
 # Logging configuration
 current_time = datetime.now().strftime("%d-%m-%y %H-%M-%S")
@@ -38,10 +46,6 @@ statuses = {}
 
 def check_storage():
     """Check if storage folder exists and is not empty."""
-    if not installation_folder_path.exists():
-        logging.info("Creating installation folder.")
-        installation_folder_path.mkdir(parents=True, exist_ok=True)
-
     setup_files = [
         file for file in os.listdir(installation_folder_path) if file.endswith(('.exe', '.msi'))
     ]
