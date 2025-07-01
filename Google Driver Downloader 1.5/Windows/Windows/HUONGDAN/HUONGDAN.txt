@@ -1,0 +1,15 @@
+BUOC 1: TAI FILE credentials.json VE, LAM THEO HUONG DAN SAU:
+xem hinh : huongdan_credentialsJSON.jpg
+
+(nho doi ten file thanh credentials.json va copy vao cung thu muc cua chuong trinh )
+
+BUOC 2: CAI PYTHON 3.10.11 VAO MAY TINH THEO LINK SAU: https://www.python.org/ftp/python/3.10.11/python-3.10.11-amd64.exe
+
+BUOC 3: CHAY FILE NAY DE CAI DAT VAO MAY TINH: Windows_Install.bat
+
+
+SAU KHI LAM XONG 3 BUOC TREN, BAN CHI CAN CHAY FILE : Windows_Start_App.bat CHO CAC LAN SAU, KHONG CAN CAI DAT GI NUA HET !!!!
+
+( CAC BAN LUU Y CHI MO TRINH DUYET CHUA TAI KHOAN MA BAN DA LAY credentials.json NHA )
+
+MOI CHI TIET XIN LIEN HE ANDY N LE zalo: 0908.23.11.81 hoac facebook: facebook.com/ndle2

@@ -1,0 +1,8 @@
+google-api-python-client
+gradio
+tk
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+httplib2
+requests
