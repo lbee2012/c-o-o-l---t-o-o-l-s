@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "selenium-webdriver": "^4.38.0"
+  }
+}
