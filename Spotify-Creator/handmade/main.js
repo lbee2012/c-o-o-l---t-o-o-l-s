@@ -32,15 +32,17 @@ const { Select } = requireOrExit('selenium-webdriver/lib/select');
 // ------------ Config ------------
 const ACCOUNTS_FILE = path.resolve(__dirname, 'input_accounts.txt');
 const PROXIES_FILE = path.resolve(__dirname, 'proxies.txt');
+const OUTPUT_FILE = path.resolve(__dirname, 'output_accounts.txt');
 const SIGNUP_URL = 'https://www.spotify.com/my-en/signup';
+const DOWNLOAD_SUCCESS_URL = 'https://www.spotify.com/my-en/download/windows/';
 
 const USE_CAPSOLVER = true; // set true if you still want to load the Capsolver extension
 const CHROME_LANGUAGE = 'ms-MY'; // Malay locale so Spotify serves the MY experience
+const MAX_PARALLEL_DRIVERS = 7; // number of simultaneous Chrome sessions
 
-// Using original absolute locations; adjust later if you relocate the binaries.
-const CHROME_BINARY_PATH = 'S:/git/c-o-o-l---t-o-o-l-s/Spotify-Creator/chrome-win64/chrome.exe';
-const CHROMEDRIVER_PATH = 'S:/git/c-o-o-l---t-o-o-l-s/Spotify-Creator/chromedriver-win64/chromedriver.exe';
-const CAPSOLVER_EXTENSION_PATH = 'S:/git/c-o-o-l---t-o-o-l-s/Spotify-Creator/capsolver-sources';
+const CHROME_BINARY_PATH = path.resolve(__dirname, '..', 'chrome-win64', 'chrome.exe');
+const CHROMEDRIVER_PATH = path.resolve(__dirname, '..', 'chromedriver-win64', 'chromedriver.exe');
+const CAPSOLVER_EXTENSION_PATH = path.resolve(__dirname, '..', 'capsolver-sources');
 const CAPSOLVER_EXTENSION_PATH_SANITIZED = CAPSOLVER_EXTENSION_PATH.replace(/\\/g, '/');
 
 const SELECTORS = {
@@ -81,17 +83,50 @@ function parseProxy(line) {
     return null;
   }
   const parts = line.split(':');
-  if (parts.length < 2) {
-    throw new Error(`Proxy entry must look like ip:port[:user:pass], got: ${line}`);
+  if (parts.length === 4) {
+    const [username, password, host, port] = parts;
+    return { host, port, username, password };
   }
-  const [host, port, username, password] = parts;
-    
-  return {
-    host,
-    port,
-    username,
-    password,
-  };
+  if (parts.length >= 2) {
+    const [host, port, username, password] = parts;
+    return { host, port, username, password };
+  }
+  throw new Error(`Proxy entry must look like ip:port or login:pass:ip:port, got: ${line}`);
+}
+
+async function recordSuccessfulAccount(email, password) {
+  const entry = `${email}\n`;
+  try {
+    await fs.appendFile(OUTPUT_FILE, entry, 'utf8');
+    console.log(`Saved account to output: ${email}`);
+  } catch (err) {
+    console.warn(`Warning: unable to write to ${OUTPUT_FILE}: ${err.message}`);
+  }
+}
+
+function pickRandomProxy(proxies) {
+  if (!proxies || proxies.length === 0) {
+    return null;
+  }
+  const index = Math.floor(Math.random() * proxies.length);
+  return proxies[index];
+}
+
+async function waitForDownloadSuccess(driver, timeoutMs = 40000, pollMs = 5000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    try {
+      const currentUrl = await driver.getCurrentUrl();
+      if (currentUrl && currentUrl.startsWith(DOWNLOAD_SUCCESS_URL)) {
+        return true;
+      }
+    } catch (err) {
+      console.warn(`Warning: unable to read current URL while polling for success: ${err.message}`);
+      break;
+    }
+    await driver.sleep(pollMs);
+  }
+  return false;
 }
 
 async function buildDriver(proxySettings) {
@@ -100,8 +135,9 @@ async function buildDriver(proxySettings) {
   if (proxySettings?.host && proxySettings?.port) {
     options.addArguments(`--proxy-server=http://${proxySettings.host}:${proxySettings.port}`);
   }
+  options.addArguments('--disable-setuid-sandbox');
   options.addArguments('--no-sandbox');
-  options.addArguments(`--disable-dev-shm-usage`);
+  options.addArguments('--disable-dev-shm-usage');
   options.addArguments('--disable-gpu');
   options.addArguments('--remote-debugging-port=0');
   if (CHROME_LANGUAGE) {
@@ -267,7 +303,7 @@ async function skipAdsAndSolveCaptcha(driver) {
     7500,
   );
   const signUpBtn = await wait;
-  await driver.sleep(1000);
+  await driver.sleep(30000);
   await signUpBtn.click();
   console.log('Sign up button clicked.');
 
@@ -387,38 +423,103 @@ async function signupOne(driver, email, password) {
   console.log(`[${email}] Signup flow completed.\n`);
 }
 
-async function main() {
-  const accounts = await readLines(ACCOUNTS_FILE);
-  if (!accounts.length) {
-    throw new Error('No accounts found in input_accounts.txt');
+async function runSignupForAccount(email, password, proxies) {
+  const proxyLine = pickRandomProxy(proxies);
+  const proxySettings = proxyLine ? parseProxy(proxyLine) : null;
+  if (proxySettings) {
+    console.log(`[${email}] Using proxy ${proxySettings.host}:${proxySettings.port}`);
+  } else {
+    console.log(`[${email}] No proxy selected.`);
   }
-  const email = accounts[0];
-  const password = email;
-
-  const proxies = await readLines(PROXIES_FILE);
-  const proxySettings = parseProxy(proxies[0]);
 
   const driver = await buildDriver(proxySettings);
 
   if (!USE_CAPSOLVER) {
-    console.log('Capsolver disabled; continuing without automated CAPTCHA solving.');
+    console.log(`[${email}] Capsolver disabled; continuing without automated CAPTCHA solving.`);
   }
   await driver.get(SIGNUP_URL);
+
+  let signupCompleted = false;
+  const ensureRecorded = async () => {
+    if (!signupCompleted) {
+      await recordSuccessfulAccount(email, password);
+      signupCompleted = true;
+    }
+  };
 
   try {
     await toPassword(driver, email);
     await toProfile(driver, password);
     await fillProfile(driver);
     await skipAdsAndSolveCaptcha(driver);
-    await waitForRecaptchaSolution(driver, 30000);
-    await pressContinue(driver);
+    if (await waitForDownloadSuccess(driver, 30000, 5000)) {
+      await ensureRecorded();
+    }
+    if (!signupCompleted) {
+      await waitForRecaptchaSolution(driver, 30000);
+      if (await waitForDownloadSuccess(driver, 40000, 5000)) {
+        await ensureRecorded();
+      }
+    }
+    if (!signupCompleted) {
+      await pressContinue(driver);
+      if (await waitForDownloadSuccess(driver, 30000, 5000)) {
+        await ensureRecorded();
+      } else {
+        const finalUrl = await driver.getCurrentUrl();
+        console.warn(`[${email}] Signup did not land on expected page. Current URL: ${finalUrl}`);
+      }
+    }
   } catch (err) {
-    console.error('Error:', err.message);
+    console.error(`[${email}] Error:`, err.message);
   } finally {
     await driver.quit();
   }
 
-  console.log('Process completed.');
+  console.log(`[${email}] Process completed. Success recorded: ${signupCompleted}`);
+  return signupCompleted;
+}
+
+async function main() {
+  const accounts = await readLines(ACCOUNTS_FILE);
+  if (!accounts.length) {
+    throw new Error('No accounts found in input_accounts.txt');
+  }
+
+  const proxies = await readLines(PROXIES_FILE);
+  console.log(`Loaded ${accounts.length} accounts and ${proxies.length} proxies.`);
+
+  const successes = [];
+  const failures = [];
+
+  for (let i = 0; i < accounts.length; i += MAX_PARALLEL_DRIVERS) {
+    const batch = accounts.slice(i, i + MAX_PARALLEL_DRIVERS);
+    const batchLabel = `${i + 1}-${i + batch.length}`;
+    console.log(`Starting batch ${batchLabel}: ${batch.join(', ')}`);
+
+    const tasks = batch.map((email) =>
+      runSignupForAccount(email, email, proxies)
+        .then((success) => ({ email, success }))
+        .catch((err) => {
+          console.error(`[${email}] Unexpected failure:`, err);
+          return { email, success: false };
+        }),
+    );
+
+    const results = await Promise.all(tasks);
+    results.forEach(({ email, success }) => {
+      if (success) {
+        successes.push(email);
+      } else {
+        failures.push(email);
+      }
+    });
+  }
+
+  console.log(`All accounts processed. Success: ${successes.length}, Failed: ${failures.length}.`);
+  if (failures.length) {
+    console.log('Failed accounts:', failures.join(', '));
+  }
 }
 
 if (require.main === module) {
